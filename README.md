@@ -1,4 +1,4 @@
-# wheatherapp
+# weatherapp
 
 A new Flutter project.
 

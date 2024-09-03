@@ -1,4 +1,3 @@
-
 import "package:flutter/material.dart";
 
 class WeatherForecastCard extends StatelessWidget {
@@ -6,12 +5,11 @@ class WeatherForecastCard extends StatelessWidget {
   final IconData icon;
   final String temp;
 
-  const  WeatherForecastCard({
+  const WeatherForecastCard({
     super.key,
     required this.time,
     required this.icon,
     required this.temp,
-
   });
 
   @override
@@ -19,26 +17,26 @@ class WeatherForecastCard extends StatelessWidget {
     return Card(
       elevation: 10,
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             Text(
               time,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Icon(
-           icon,
+              icon,
               size: 30,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
               temp,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             )
           ],
         ),
