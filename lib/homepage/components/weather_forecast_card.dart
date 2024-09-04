@@ -14,31 +14,34 @@ class WeatherForecastCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Text(
-              time,
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Icon(
-              icon,
-              size: 30,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              temp,
-              style: const TextStyle(fontSize: 16),
-            )
-          ],
+    return SizedBox(
+      width: 120,
+      child: Card(
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Text(
+                time.toString(),
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Icon(
+                icon,
+                size: 30,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                temp,
+                style: const TextStyle(fontSize: 16),
+              )
+            ],
+          ),
         ),
       ),
     );

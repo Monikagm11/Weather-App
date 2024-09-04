@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weatherapp/homepage/components/additional_info_widget.dart';
 import 'package:weatherapp/homepage/components/weather_forecast_card.dart';
 
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     try {
       Dio dio = Dio();
       final response = await dio.get(
-          "https://api.openweathermap.org/data/2.5/forecast?q=London,uk&APPID=166806596f945b4b5c6c14f21dc330a2");
+          "https://api.openweathermap.org/data/2.5/forecast?q=Kathmandu,nepal&APPID=166806596f945b4b5c6c14f21dc330a2");
       print(response);
       final data = response.data;
 
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    currenttemp,
+                                    "$currenttemp K",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall,
@@ -134,60 +135,35 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text("Weather Forecast",
+                    const Text("Hourly Forecast",
                         style: TextStyle(fontSize: 22)),
                     const SizedBox(
                       height: 10,
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            child: WeatherForecastCard(
-                              time: "00.00",
-                              icon:
-                                  currentsky == "Clouds" || currentsky == "Rain"
-                                      ? Icons.cloud
-                                      : Icons.sunny,
-                              temp: "200k",
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 120,
-                            child: WeatherForecastCard(
-                              time: "00.00",
-                              icon: Icons.cloud,
-                              temp: "200k",
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 120,
-                            child: WeatherForecastCard(
-                              time: "00.00",
-                              icon: Icons.cloud,
-                              temp: "200k",
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 120,
-                            child: WeatherForecastCard(
-                              time: "00.00",
-                              icon: Icons.cloud,
-                              temp: "200k",
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 120,
-                            child: WeatherForecastCard(
-                              time: "00.00",
-                              icon: Icons.cloud,
-                              temp: "200k",
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 130,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          width: 5,
+                        ),
+                        itemBuilder: (context, index) {
+                          final hourlyForecast = data['list'][index + 1];
+                          final hourlySky =
+                              data['list'][index + 1]['weather'][0]['main'];
+                          final hourlyTemp =
+                              hourlyForecast['main']['temp'].toString();
+                          final time = DateTime.parse(hourlyForecast['dt_txt']);
+
+                          return WeatherForecastCard(
+                            time: DateFormat.j().format(time),
+                            temp: "$hourlyTemp K",
+                            icon: hourlySky == "Clouds" || hourlySky == "Rain"
+                                ? Icons.cloud
+                                : Icons.sunny,
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(
